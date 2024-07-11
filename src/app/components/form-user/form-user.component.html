@@ -1,0 +1,108 @@
+<div class="container-md mb-5" style="margin-top: 80px">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <div class="mb-5"></div>
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" [class.was-validated]="profileForm.invalid && profileForm.touched">
+          <div class="row">
+            <div class="row justify-content-center">
+              <div class="col-6 mb-2 mt-5 d-flex flex-column align-items-center">
+                <label for="formprofilePreview" class="form-label fw-bold">Profile</label>
+                <div *ngIf="profileImageUrl" class="profile-preview bg-info rounded-circle d-flex justify-content-center align-items-center">
+                  <img [src]="profileImageUrl" alt="Profile Image" class="img-fluid rounded-circle" id="formprofilePreview" />
+                </div>
+                <input class="form-control mt-3" aria-label="file example" type="file" id="image" formControlName="image" (change)="onChange($event.target.files)" required />
+                <div class="invalid-feedback" *ngIf="profileForm.get('image').invalid && (profileForm.get('image').dirty || profileForm.get('image').touched)">File not selected</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 mb-3">
+              <label for="exampleInputfirstname" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="exampleInputfirstname" formControlName="firstname" required />
+              <div class="invalid-feedback" *ngIf="profileForm.get('firstname').invalid && (profileForm.get('firstname').dirty || profileForm.get('firstname').touched)">Please enter first name.</div>
+            </div>
+            <div class="col-4 mb-3">
+              <label for="exampleInputLastname" class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="exampleInputLastname" formControlName="lastname" required />
+              <div class="invalid-feedback" *ngIf="profileForm.get('lastname').invalid && (profileForm.get('lastname').dirty || profileForm.get('lastname').touched)">Please enter last name.</div>
+            </div>
+            <div class="col-4 mb-3">
+              <label for="exampleInputtelephone" class="form-label">Telephone</label>
+              <input type="text" class="form-control" id="exampleInputtelephone" formControlName="telephone" required />
+              <div class="invalid-feedback" *ngIf="profileForm.get('telephone').invalid && (profileForm.get('telephone').dirty || profileForm.get('telephone').touched)">Please enter telephone number.</div>
+            </div>
+            <div class="col-6 mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" formControlName="email" required />
+              <div class="invalid-feedback" *ngIf="profileForm.get('email').invalid && (profileForm.get('email').dirty || profileForm.get('email').touched)">Please enter a valid email.</div>
+            </div>
+            <div class="col-6 mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password" required />
+              <div class="invalid-feedback" *ngIf="profileForm.get('password').invalid && (profileForm.get('password').dirty || profileForm.get('password').touched)">Please enter password.</div>
+            </div>
+          </div>
+          <div class="fw-bold mb-2">Add Address</div>
+          <div class="card">
+            <div class="card-body">
+              <div formArrayName="addresses">
+                <div *ngFor="let address of addressesFormArray.controls; let i = index" [formGroupName]="i">
+                  <div class="fw-medium">Address {{ i + 1 }}</div>
+                  <div class="row mb-3">
+                    <div class="col-3">
+                      <label for="houseNo{{ i }}" class="form-label">House No</label>
+                      <input type="text" class="form-control" id="houseNo{{ i }}" formControlName="houseNo" required />
+                    </div>
+                    <div class="col-2">
+                      <label for="moo{{ i }}" class="form-label">Moo</label>
+                      <input type="text" class="form-control" id="moo{{ i }}" formControlName="moo" required />
+                    </div>
+                    <div class="col-3">
+                      <label for="soi{{ i }}" class="form-label">Soi</label>
+                      <input type="text" class="form-control" id="soi{{ i }}" formControlName="soi" required />
+                    </div>
+                    <div class="col-3">
+                      <label for="road{{ i }}" class="form-label">Road</label>
+                      <input type="text" class="form-control" id="road{{ i }}" formControlName="road" required />
+                    </div>
+                    <div class="col-3">
+                      <label for="districtName{{ i }}" class="form-label">District</label>
+                      <input type="text" class="form-control" id="districtName{{ i }}" formControlName="districtName" required />
+                    </div>
+                    <div class="col-3">
+                      <label for="subdistrictName{{ i }}" class="form-label">Subdistrict</label>
+                      <input type="text" class="form-control" id="subdistrictName{{ i }}" formControlName="subdistrictName" required />
+                    </div>
+                    <div class="col-3">
+                      <label for="provinceName{{ i }}" class="form-label">Province</label>
+                      <input type="text" class="form-control" id="provinceName{{ i }}" formControlName="provinceName" required />
+                    </div>
+                    <div class="col-2">
+                      <label for="zipcode{{ i }}" class="form-label">ZipCode</label>
+                      <input type="text" class="form-control" id="zipcode{{ i }}" formControlName="zipcode" required />
+                    </div>
+                    <div class="col-1 mt-1">
+                      <button type="button" class="btn btn-danger mt-4 text-center" (click)="removeAddress(i)">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary mb-3" (click)="addAddress()">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="text-center mt-5 mb-4">
+            <button type="submit" class="btn btn-success me-2 btn-equal">{{ isEditMode ? 'Update' : 'Add' }}</button>
+            <a href="/homepage" type="button" class="btn btn-danger me-2 btn-equal">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

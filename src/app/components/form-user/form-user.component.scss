@@ -1,0 +1,22 @@
+.btn-equal {
+    width: 100px; 
+  }
+
+  .profile-preview {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .profile-preview img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .btn-equal {
+    min-width: 120px; /* Ensure buttons have the same width */
+  }
+
